@@ -1,5 +1,7 @@
 ﻿using Balogh_Szilard___tema_1_dawm.Data;
+using Balogh_Szilard___tema_1_dawm.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Balogh_Szilard___tema_1_dawm.Controllers
 {
@@ -13,9 +15,44 @@ namespace Balogh_Szilard___tema_1_dawm.Controllers
             this.dbContext = dbContext;
         }
         [HttpGet]
-        public IActionResult GetAllMovies()
+        public async Task<IActionResult> GetAllMovies()
         {
-            return Ok(dbContext.Movies.ToList());
+            return Ok(await dbContext.Movies.ToListAsync());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMovie(AddMovieRequest addMovieRequest)
+        {
+            var movie = new Movie()
+            {
+                Id = Guid.NewGuid(),
+                Title = addMovieRequest.Title,
+                PublicationDate = addMovieRequest.PublicationDate,
+                Likes = addMovieRequest.Likes,
+                Director = addMovieRequest.Director
+            };
+
+            await dbContext.Movies.AddAsync(movie);
+            await dbContext.SaveChangesAsync();
+
+            return Ok(movie);
+        }
+        [HttpPut]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> UpdateMovie([FromRoute] Guid id, UpdateMovieRequest updateMovieRequest)
+        {
+            var movie = dbContext.Movies.Find(id);
+            if (movie != null)
+            {
+                movie.Title = updateMovieRequest.Title;
+                movie.Director = updateMovieRequest.Director;
+                movie.PublicationDate = updateMovieRequest.PublicationDate;
+                movie.Likes = updateMovieRequest.Likes;
+
+                await dbContext.SaveChangesAsync();
+                return Ok(movie);
+            }
+            return NotFound();
         }
 
         //[HttpGet]

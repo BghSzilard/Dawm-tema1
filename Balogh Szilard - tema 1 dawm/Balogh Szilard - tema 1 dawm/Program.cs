@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<MoviesDbContext>(options => options.UseInMemoryDatabase("TeamsDb"));
+builder.Services.AddDbContext<MoviesDbContext>(options => options.UseInMemoryDatabase("MoviesDb"));
 
 var app = builder.Build();
 
