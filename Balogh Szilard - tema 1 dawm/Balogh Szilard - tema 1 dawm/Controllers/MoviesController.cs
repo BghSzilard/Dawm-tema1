@@ -69,6 +69,22 @@ namespace Balogh_Szilard___tema_1_dawm.Controllers
             return NotFound();
         }
 
+        [HttpDelete]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> DeleteContact([FromRoute] Guid id)
+        {
+            var movie = await dbContext.Movies.FindAsync(id);
+
+            if (movie != null)
+            {
+                dbContext.Remove(movie);
+                await dbContext.SaveChangesAsync();
+                return Ok(movie);
+            }
+
+            return NotFound();
+        }
+
         //[HttpGet]
         //public IActionResult GetMoviesWithLikes(int likes)
         //{
