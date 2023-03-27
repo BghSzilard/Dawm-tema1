@@ -1,4 +1,6 @@
 ﻿using Balogh_Szilard___tema_1_dawm.Data;
+using Balogh_Szilard___tema_1_dawm.DTOs;
+using Balogh_Szilard___tema_1_dawm.Mappings;
 using Balogh_Szilard___tema_1_dawm.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,11 +15,11 @@ namespace Balogh_Szilard___tema_1_dawm.Services
             this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Movie>> GetAllMovies()
+        public async Task<IEnumerable<MovieSummaryDTO>> GetAllMovies()
         {
-            return await dbContext.Movies.ToListAsync();
+            var movies = await dbContext.Movies.ToListAsync();
+            return movies.ToDTOs().ToList();
         }
-
         public async Task<Movie> GetMovie(Guid id)
         {
             return await dbContext.Movies.FindAsync(id);
