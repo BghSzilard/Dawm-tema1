@@ -1,5 +1,6 @@
 ﻿using Balogh_Szilard___tema_1_dawm.Data;
 using Balogh_Szilard___tema_1_dawm.Models;
+using Balogh_Szilard___tema_1_dawm.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,22 +10,22 @@ namespace Balogh_Szilard___tema_1_dawm.Controllers
     [Route("api/[controller]")]
     public class MoviesController : Controller
     {
-        private readonly MoviesDbContext dbContext;
-        public MoviesController(MoviesDbContext dbContext)
+        private readonly MoviesService movieService;
+        public MoviesController(MoviesService movieService)
         {
-            this.dbContext = dbContext;
+            this.movieService = movieService;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllMovies()
         {
-            return Ok(await dbContext.Movies.ToListAsync());
+            var movies = await movieService.GetAllMovies();
+            return Ok(movies);
         }
 
-        [HttpGet]
-        [Route("{id:guid}")]
-        public async Task<IActionResult> GetMovie([FromRoute] Guid id)
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetMovie(Guid id)
         {
-            var movie = await dbContext.Movies.FindAsync(id);
+            var movie = await movieService.GetMovie(id);
 
             if (movie == null)
             {
@@ -37,52 +38,31 @@ namespace Balogh_Szilard___tema_1_dawm.Controllers
         [HttpPost]
         public async Task<IActionResult> AddMovie(AddMovieRequest addMovieRequest)
         {
-            var movie = new Movie()
-            {
-                Id = Guid.NewGuid(),
-                Title = addMovieRequest.Title,
-                PublicationDate = addMovieRequest.PublicationDate,
-                Likes = addMovieRequest.Likes,
-                Director = addMovieRequest.Director
-            };
-
-            await dbContext.Movies.AddAsync(movie);
-            await dbContext.SaveChangesAsync();
-
+            var movie = await movieService.AddMovie(addMovieRequest);
             return Ok(movie);
         }
-        [HttpPut]
-        [Route("{id:guid}")]
-        public async Task<IActionResult> UpdateMovie([FromRoute] Guid id, UpdateMovieRequest updateMovieRequest)
-        {
-            var movie = dbContext.Movies.Find(id);
-            if (movie != null)
-            {
-                movie.Title = updateMovieRequest.Title;
-                movie.Director = updateMovieRequest.Director;
-                movie.PublicationDate = updateMovieRequest.PublicationDate;
-                movie.Likes = updateMovieRequest.Likes;
 
-                await dbContext.SaveChangesAsync();
-                return Ok(movie);
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateMovie(Guid id, UpdateMovieRequest updateMovieRequest)
+        {
+            var movie = await movieService.UpdateMovie(id, updateMovieRequest);
+            if (movie == null)
+            {
+                return NotFound();
             }
-            return NotFound();
+            return Ok(movie);
         }
 
         [HttpDelete]
         [Route("{id:guid}")]
-        public async Task<IActionResult> DeleteContact([FromRoute] Guid id)
+        public async Task<IActionResult> DeleteContact(Guid id)
         {
-            var movie = await dbContext.Movies.FindAsync(id);
-
-            if (movie != null)
+            var movie = await movieService.DeleteMovie(id);
+            if (movie == null)
             {
-                dbContext.Remove(movie);
-                await dbContext.SaveChangesAsync();
-                return Ok(movie);
+                return NotFound();
             }
-
-            return NotFound();
+            return Ok(movie);
         }
 
         //[HttpGet]
