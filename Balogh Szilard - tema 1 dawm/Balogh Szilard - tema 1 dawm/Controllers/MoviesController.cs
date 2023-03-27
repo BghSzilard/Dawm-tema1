@@ -20,6 +20,20 @@ namespace Balogh_Szilard___tema_1_dawm.Controllers
             return Ok(await dbContext.Movies.ToListAsync());
         }
 
+        [HttpGet]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> GetMovie([FromRoute] Guid id)
+        {
+            var movie = await dbContext.Movies.FindAsync(id);
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(movie);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddMovie(AddMovieRequest addMovieRequest)
         {
