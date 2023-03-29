@@ -15,12 +15,12 @@ namespace Balogh_Szilard___tema_1_dawm.Services
             this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<MovieSummaryDTO>> GetAllMovies()
+        public async Task<IEnumerable<MovieSummaryDTO?>> GetAllMovies()
         {
             var movies = await dbContext.Movies.ToListAsync();
             return movies.ToDTOs().ToList();
         }
-        public async Task<Movie> GetMovie(Guid id)
+        public async Task<Movie?> GetMovie(Guid id)
         {
             return await dbContext.Movies.FindAsync(id);
         }
@@ -42,7 +42,7 @@ namespace Balogh_Szilard___tema_1_dawm.Services
             return movie;
         }
 
-        public async Task<Movie> UpdateMovie(Guid id, UpdateMovieRequest updateMovieRequest)
+        public async Task<Movie?> UpdateMovie(Guid id, UpdateMovieRequest updateMovieRequest)
         {
             var movie = await dbContext.Movies.FindAsync(id);
 
@@ -61,7 +61,7 @@ namespace Balogh_Szilard___tema_1_dawm.Services
             return movie;
         }
 
-        public async Task<Movie> DeleteMovie(Guid id)
+        public async Task<Movie?> DeleteMovie(Guid id)
         {
             var movie = await dbContext.Movies.FindAsync(id);
 

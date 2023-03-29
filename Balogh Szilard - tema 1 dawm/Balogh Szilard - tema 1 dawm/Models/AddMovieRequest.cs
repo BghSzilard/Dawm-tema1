@@ -2,9 +2,9 @@
 {
     public class AddMovieRequest
     {
-        public String Title { get; set; }
+        public string? Title { get; set; }
         public DateTime PublicationDate { get; set; }
         public int Likes { get; set; }
-        public String Director { get; set; }
+        public string? Director { get; set; }
     }
 }

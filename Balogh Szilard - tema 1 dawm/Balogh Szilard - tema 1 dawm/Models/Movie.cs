@@ -3,10 +3,10 @@
     public class Movie
     {
         public Guid Id { get; set; }
-        public string Title { get; set; }
+        public string? Title { get; set; }
         public DateTime PublicationDate { get; set; }
         public int Likes { get; set; }
-        public string Director { get; set; }
+        public string? Director { get; set; }
         
         public Movie()
         {

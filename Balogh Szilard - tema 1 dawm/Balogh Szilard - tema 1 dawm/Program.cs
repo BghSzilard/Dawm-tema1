@@ -19,9 +19,9 @@ var app = builder.Build();
 
 var movies = new List<Movie>
 {
-    new Movie {Title = "The Shawshank Redemption", Director = "Frank Darabont", PublicationDate = new DateTime(1994, 1, 1)},
-    new Movie {Title = "The Godfather", Director = "Francis Ford Coppola", PublicationDate = new DateTime(1972, 1, 1)},
-    new Movie {Title = "The Dark Knight", Director = "Christopher Nolan", PublicationDate = new DateTime(2008, 1, 1)},
+    new Movie {Title = "The Shawshank Redemption", Director = "Frank Darabont", PublicationDate = new DateTime(1994, 1, 1), Likes = 150},
+    new Movie {Title = "The Godfather", Director = "Francis Ford Coppola", PublicationDate = new DateTime(1972, 1, 1), Likes = 500},
+    new Movie {Title = "The Dark Knight", Director = "Christopher Nolan", PublicationDate = new DateTime(2008, 1, 1), Likes = 1000},
 };
 
 using (var scope = app.Services.CreateScope())

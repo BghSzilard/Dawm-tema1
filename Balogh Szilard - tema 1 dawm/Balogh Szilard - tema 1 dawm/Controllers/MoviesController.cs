@@ -53,8 +53,7 @@ namespace Balogh_Szilard___tema_1_dawm.Controllers
             return Ok(movie);
         }
 
-        [HttpDelete]
-        [Route("{id:guid}")]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteContact(Guid id)
         {
             var movie = await movieService.DeleteMovie(id);
@@ -65,13 +64,11 @@ namespace Balogh_Szilard___tema_1_dawm.Controllers
             return Ok(movie);
         }
 
-        //[HttpGet]
-        //public IActionResult GetMoviesWithLikes(int likes)
-        //{
-        //    var teams = dbContext.Movies.Where(t => t.Likes >= likes).ToList();
-        //    return Ok(teams);
-        //}
-
-
+        [HttpGet("WithLikes/{likes:int}")]
+        public IActionResult GetMoviesWithLikes(int likes)
+        {
+            var movies = movieService.GetMoviesWithLikes(likes);
+            return Ok(movies);
+        }
     }
 }
