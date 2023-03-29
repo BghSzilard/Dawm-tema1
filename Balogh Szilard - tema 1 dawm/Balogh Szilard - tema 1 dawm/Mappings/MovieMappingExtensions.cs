@@ -21,11 +21,7 @@ namespace Balogh_Szilard___tema_1_dawm.Mappings
         }
         public static IEnumerable<MovieSummaryDTO> ToDTOs(this IEnumerable<Movie> movies)
         {
-            return movies.Select(m => new MovieSummaryDTO
-            {
-                Id = m.Id,
-                Title = m.Title
-            }).ToList();
+            return movies.Select(m => m.ToDTO()).ToList();
         }
     }
 }

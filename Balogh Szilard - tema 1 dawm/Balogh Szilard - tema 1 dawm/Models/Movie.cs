@@ -3,10 +3,22 @@
     public class Movie
     {
         public Guid Id { get; set; }
-        public String Title { get; set; }
+        public string Title { get; set; }
         public DateTime PublicationDate { get; set; }
         public int Likes { get; set; }
-        public String Director { get; set; }
+        public string Director { get; set; }
         
+        public Movie()
+        {
+
+        }
+        public Movie(string title, DateTime publicationDate, int likes, string director)
+        {
+            Id = Guid.NewGuid();
+            Title = title;
+            PublicationDate = publicationDate;
+            Likes = likes;
+            Director = director;
+        }
     }
 }
