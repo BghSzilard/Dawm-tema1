@@ -6,7 +6,7 @@ namespace Balogh_Szilard___tema_1_dawm.Mappings
 {
     public static class MovieMappingExtensions
     {
-        public static MovieSummaryDTO? ToDTO(this Movie movie)
+        public static MovieSummaryDTO? ToSummaryDTO(this Movie movie)
         {
             if (movie == null)
             {
@@ -19,9 +19,9 @@ namespace Balogh_Szilard___tema_1_dawm.Mappings
                 Title = movie.Title
             };
         }
-        public static IEnumerable<MovieSummaryDTO?> ToDTOs(this IEnumerable<Movie> movies)
+        public static IEnumerable<MovieSummaryDTO?> ToSummaryDTOs(this IEnumerable<Movie> movies)
         {
-            return movies.Select(m => m.ToDTO()).ToList();
+            return movies.Select(m => m.ToSummaryDTO()).ToList();
         }
     }
 }

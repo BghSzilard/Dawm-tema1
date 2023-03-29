@@ -63,12 +63,5 @@ namespace Balogh_Szilard___tema_1_dawm.Controllers
             }
             return Ok(movie);
         }
-
-        [HttpGet("WithLikes/{likes:int}")]
-        public IActionResult GetMoviesWithLikes(int likes)
-        {
-            var movies = movieService.GetMoviesWithLikes(likes);
-            return Ok(movies);
-        }
     }
 }

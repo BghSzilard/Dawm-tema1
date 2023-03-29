@@ -18,7 +18,7 @@ namespace Balogh_Szilard___tema_1_dawm.Services
         public async Task<IEnumerable<MovieSummaryDTO?>> GetAllMovies()
         {
             var movies = await dbContext.Movies.ToListAsync();
-            return movies.ToDTOs().ToList();
+            return movies.ToSummaryDTOs().ToList();
         }
         public async Task<Movie?> GetMovie(Guid id)
         {
@@ -51,9 +51,6 @@ namespace Balogh_Szilard___tema_1_dawm.Services
                 return null;
             }
 
-            movie.Title = updateMovieRequest.Title;
-            movie.Director = updateMovieRequest.Director;
-            movie.PublicationDate = updateMovieRequest.PublicationDate;
             movie.Likes = updateMovieRequest.Likes;
 
             await dbContext.SaveChangesAsync();
@@ -74,11 +71,6 @@ namespace Balogh_Szilard___tema_1_dawm.Services
             await dbContext.SaveChangesAsync();
 
             return movie;
-        }
-
-        public async Task<IEnumerable<Movie>> GetMoviesWithLikes(int likes)
-        {
-            return await dbContext.Movies.Where(m => m.Likes >= likes).ToListAsync();
         }
     }
 }

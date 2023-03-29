@@ -2,9 +2,6 @@
 {
     public class UpdateMovieRequest
     {
-        public string? Title { get; set; }
-        public DateTime PublicationDate { get; set; }
         public int Likes { get; set; }
-        public string? Director { get; set; }
     }
 }
